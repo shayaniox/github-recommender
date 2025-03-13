@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  database:
+    image: postgres:17.4-alpine
+    container_name: github_repo_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: github_recommender
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - github_recommender
+
+volumes:
+  pgdata:
+
+networks:
+  github_recommender:
+    name: github_recommender
+

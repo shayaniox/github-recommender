@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -10,7 +11,6 @@ import (
 
 	_ "github.com/lib/pq"
 	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
 )
 
 // Repository struct for JSON decoding
@@ -31,10 +31,46 @@ type Topic struct {
 const (
 	host     = "localhost"
 	port     = 5432
-	user     = "github-recommender"
-	password = "github-recommender"
-	dbname   = "github-recommender"
+	user     = "user"
+	password = "password"
+	dbname   = "github_repo_analysis"
 )
+
+func main() {
+	dataset := flag.String("dataset", "", "Path to the dataset file")
+	dbHost := flag.String("host", "", "database host")
+	flag.Parse()
+
+	if *dbHost == "" {
+		*dbHost = host
+	}
+
+	flag.Parse()
+
+	if *dataset == "" {
+		fmt.Println("Error: Dataset path is required. Use -dataset flag.")
+		os.Exit(1)
+	}
+
+	psqlInfo := fmt.Sprintf(
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		*dbHost, port, user, password, dbname,
+	)
+
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	log.SetFlags(log.Lshortfile | log.Ldate)
+
+	jsonFile := *dataset // Update with actual file
+	batchSize := 1000    // Adjust batch size for performance
+	if err := processJSON(db, jsonFile, batchSize); err != nil {
+		log.Fatal(err)
+	}
+}
 
 // Insert repositories in batch
 func insertRepositories(db *sql.DB, repos []Repository) (map[string]int, error) {
@@ -43,7 +79,7 @@ func insertRepositories(db *sql.DB, repos []Repository) (map[string]int, error) 
 	}
 
 	var values []string
-	var params []interface{}
+	var params []any
 	paramCount := 1
 
 	for _, repo := range repos {
@@ -91,7 +127,7 @@ func insertTopics(db *sql.DB, topics []Topic, repoIDMap map[string]int) error {
 	}
 
 	var values []string
-	var params []interface{}
+	var params []any
 	paramCount := 1
 
 	for _, topic := range topics {
@@ -167,22 +203,4 @@ func processJSON(db *sql.DB, jsonFile string, batchSize int) error {
 
 	fmt.Println("✅ Data successfully stored in PostgreSQL.")
 	return nil
-}
-
-func main() {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	logrus.Info(psqlInfo)
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	log.SetFlags(log.Lshortfile | log.Ldate)
-
-	jsonFile := "dataset/pretty-dataset.json" // Update with actual file
-	batchSize := 1000                         // Adjust batch size for performance
-	if err := processJSON(db, jsonFile, batchSize); err != nil {
-		log.Fatal(err)
-	}
 }
