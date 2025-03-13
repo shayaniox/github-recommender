@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -17,9 +17,9 @@ import (
 const (
 	dbHost     = "localhost"
 	dbPort     = 5432
-	dbUser     = "github-recommender"
-	dbPassword = "github-recommender"
-	dbName     = "github-recommender"
+	dbUser     = "user"
+	dbPassword = "password"
+	dbName     = "github_repo_analysis"
 )
 
 // GitHub API Token (Use environment variable for security)
@@ -32,87 +32,19 @@ type Repository struct {
 	Stars         int
 }
 
-// Fetch README from GitHub API
-func fetchReadme(owner, repo string) (string, error) {
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/readme", owner, repo)
-	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("Authorization", "token "+githubToken)
-	req.Header.Set("Accept", "application/vnd.github.v3.raw")
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		body, _ := io.ReadAll(resp.Body)
-		logrus.Error(resp.StatusCode)
-		logrus.Error("response error: ", string(body))
-		return "", fmt.Errorf("README not found")
-	}
-
-	body, _ := io.ReadAll(resp.Body)
-	return string(body), nil
-}
-
-// Fetch Wiki Home Page (if available)
-func fetchWiki(owner, repo string) (string, error) {
-	url := fmt.Sprintf("https://raw.githubusercontent.com/wiki/%s/%s/Home.md", owner, repo)
-	resp, err := http.Get(url)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		body, _ := io.ReadAll(resp.Body)
-		logrus.Error(resp.StatusCode)
-		logrus.Error("response error: ", string(body))
-		return "", fmt.Errorf("wiki not found")
-	}
-
-	body, _ := io.ReadAll(resp.Body)
-	return string(body), nil
-}
-
-func checkWikiPages(owner, repo string) error {
-	// GitHub API URL for the repository's wiki
-	apiURL := fmt.Sprintf("https://api.github.com/repos/%s/%s", owner, repo)
-
-	// Make a GET request to the GitHub API
-	resp, err := http.Get(apiURL)
-	if err != nil {
-		return fmt.Errorf("failed to make request: %v", err)
-	}
-	defer resp.Body.Close()
-
-	// Check if the request was successful
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("failed to fetch repository info: status code %d", resp.StatusCode)
-	}
-
-	// Decode the JSON response
-	var repoInfo struct {
-		HasWiki bool   `json:"has_wiki"`
-		WikiURL string `json:"html_url"`
-	}
-	if err := json.NewDecoder(resp.Body).Decode(&repoInfo); err != nil {
-		return fmt.Errorf("failed to decode JSON response: %v", err)
-	}
-
-	logrus.WithFields(logrus.Fields{
-		"has wiki": repoInfo.HasWiki,
-		"wiki url": repoInfo.WikiURL,
-	}).Info()
-
-	return nil
-}
-
 func main() {
+	host := flag.String("host", "", "database host")
+	flag.Parse()
+
+	if *host == "" {
+		*host = dbHost
+	}
+
 	// Connect to PostgreSQL
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		dbHost, dbPort, dbUser, dbPassword, dbName)
+	psqlInfo := fmt.Sprintf(
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		*host, dbPort, dbUser, dbPassword, dbName,
+	)
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
@@ -142,31 +74,54 @@ func main() {
 		owner := values[0]
 		repoName := values[1]
 
-		// Fetch README and Wiki content
+		// Fetch README content
 		readme, err := fetchReadme(owner, repoName)
 		if err != nil {
 			logrus.Fatal(err)
 		}
-		checkWikiPages(owner, repoName)
 
 		// Store fetched content
-		storeReadmeAndWiki(db, repo.ID, readme)
+		storeReadme(db, repo.ID, readme)
 		i++
 	}
 
 	fmt.Println("Data fetch and store completed.")
 }
 
-func storeReadmeAndWiki(db *sql.DB, repoID int, readme string) {
+// Fetch README from GitHub API
+func fetchReadme(owner, repo string) (string, error) {
+	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/readme", owner, repo)
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Set("Authorization", "token "+githubToken)
+	req.Header.Set("Accept", "application/vnd.github.v3.raw")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		body, _ := io.ReadAll(resp.Body)
+		logrus.Error(resp.StatusCode)
+		logrus.Error("response error: ", string(body))
+		return "", fmt.Errorf("README not found")
+	}
+
+	body, _ := io.ReadAll(resp.Body)
+	return string(body), nil
+}
+
+func storeReadme(db *sql.DB, repoID int, readme string) {
 	// Insert or update data
 	query := `
-	INSERT INTO repo_docs (repo_id, readme, wiki)
-	VALUES ($1, $2, $3)
-	ON CONFLICT (repo_id) DO UPDATE SET readme = EXCLUDED.readme, wiki = EXCLUDED.wiki`
-	_, err := db.Exec(query, repoID, readme, "")
+	INSERT INTO repo_docs (repo_id, readme)
+	VALUES ($1, $2)
+	ON CONFLICT (repo_id) DO UPDATE SET readme = EXCLUDED.readme`
+	_, err := db.Exec(query, repoID, readme)
 	if err != nil {
 		log.Printf("Failed to store data for repo %d: %v", repoID, err)
 	} else {
-		fmt.Printf("Stored README & Wiki for repo %d\n", repoID)
+		fmt.Printf("Stored README for repo %d\n", repoID)
 	}
 }
