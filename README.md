@@ -79,6 +79,16 @@ CREATE TABLE repo_docs (
     repo_id INTEGER UNIQUE REFERENCES repositories(id) ON DELETE CASCADE,
     readme TEXT
 );
+
+CREATE TABLE repo_docs_preprocessed (
+    repo_id INTEGER PRIMARY KEY REFERENCES repositories(id) ON DELETE CASCADE,
+    processed_readme TEXT NOT NULL
+);
+
+CREATE TABLE repo_docs_tfidf (
+    repo_id INTEGER PRIMARY KEY REFERENCES repositories(id) ON DELETE CASCADE,
+    tfidf_vector JSONB NOT NULL
+);
 ```
 
 ### 2️⃣ Running Database with Docker
@@ -186,8 +196,19 @@ SELECT * FROM repo_docs;
 ```
 
 ---
+## Analyzing README Files
 
-## ✅ Next Steps
-- Compute **TF-IDF** for each README file
-- Analyze **repository topics** based on README content
+After storing repository metadata and README content, the next steps involve processing the README files to extract meaningful information using NLP techniques.
+
+### 1. Preprocess README Content
+
+```bash
+python src/preprocess.py
+```
+
+### 2. Calculate the TF-IDF
+
+```bash
+python src/tfidf.py
+```
 
