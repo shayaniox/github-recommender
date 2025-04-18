@@ -50,6 +50,12 @@ Then, extract the dataset
 ```bash
 unzip ~/dataset/dataset.zip -d dataset/
 ```
+
+This is a minified JSON file, for structuring the JSON content:
+```bash
+cd dataset
+jq '.' repo_metadata.json formatted.json
+```
 ---
 
 ## 📦 Setting Up the Database
