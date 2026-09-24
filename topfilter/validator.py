@@ -6,9 +6,21 @@ from data_reader import DataReader
 from metrics import Metrics
 
 class Validator:
-    """
-    Main validator class that runs evaluation metrics for the recommendation system.
-    Supports both regular and Bayesian validation modes.
+    """Stage G - score every fold's recommendations against its held-out ground truth.
+
+    Reads, per fold and per test repository:
+
+        Round3/Recommendations/acme___chatbot-server
+            #DEP#python 2.0 | #DEP#api 2.0 | ... | #DEP#async 1.2 | #DEP#bot 1.166 | ...
+        Round3/GroundTruth/acme___chatbot-server
+            {#DEP#python, #DEP#api, #DEP#docker, #DEP#rest-api, #DEP#machine-learning,
+             #DEP#chat, #DEP#bot, #DEP#fast}
+
+    and writes cumulative curves over cut-offs 1..20 into Round3/Results/. At k=10 the
+    example above scores 6 hits out of 8: P@10 = 0.60, R@10 = 0.75.
+
+    The `_b` metric variants score the bayesian/hybrid path; the unsuffixed ones score the
+    CF output on its own.
     """
     
     def __init__(self, src_dir: str, bayesian: bool):
@@ -33,9 +45,12 @@ class Validator:
         """
         Compute various evaluation metrics for the recommendation system.
         """
-        # ceil, matching runner.ten_fold_cross_validation: a floor here scores a different
-        # window than was recommended for whenever N is not a multiple of 10.
+        # ceil, not //: runner.ten_fold_cross_validation slices ceil(N/10) windows, and a
+        # validator using floor would score a different test window than was recommended
+        # for whenever N is not a multiple of 10.
         step = math.ceil(num_of_projects / 10)
+        #   step=65 for 644 projects; fold i scores projects [1+i*65 .. (i+1)*65]
+        #   cut_off_value=20 - curves are swept over the top 1..20 recommendations
         cut_off_value = self.num_of_libraries
         recall_rate = 0.0
         vals = {}
@@ -51,6 +66,14 @@ class Validator:
             k = i + 1
             sub_folder = f"Round{k}"
 
+            # A fold with no recommendations (an interrupted run, or a re-score before the
+            # later folds have been computed) is skipped rather than scored as zeros.
+            rec_dir = Path(self.src_dir) / sub_folder / "Recommendations"
+            if not rec_dir.exists() or not any(
+                    p.name != ".gitkeep" for p in rec_dir.iterdir()):
+                self.logger.warning(f"{sub_folder}: no recommendations, skipping")
+                continue
+
             metrics = Metrics(
                 k, self.num_of_libraries, self.src_dir, sub_folder,
                 training_start_pos1, training_end_pos1,
@@ -61,6 +84,9 @@ class Validator:
             # self.logger.info("==============Long tail==============")
             # metrics.long_tail()
 
+            # The _b family evaluates the hybrid list, whose first 5 entries are CNBN seeds.
+            # num_of_EASE_input tells them how many that is, so a seed already scored does not
+            # consume a second rank slot further down the file (section 4, item 14).
             if self.bayesian:
                 metrics.catalog_coverage_b()
                 metrics.success_rate_b(self.num_of_EASE_input)
