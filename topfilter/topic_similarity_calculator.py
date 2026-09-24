@@ -89,13 +89,14 @@ class TopicSimilarityCalculator:
             training_dictionaries[key_training] = training_dict
             training_graph = Graph(training_graph_file, training_dict)
 
+            # Every repository, including the first, is merged through combine(), which maps
+            # its local node IDs onto global ones by artifact name. The first used to be
+            # copied in with its LOCAL IDs (Graph(file, dict) never fills .dictionary), so
+            # its topics were never interned and its edges were attributed to whichever
+            # topics later received global IDs 1..n.
             if graph is None:
                 graph = Graph()
-                graph.OutLinks = training_graph.OutLinks.copy()
-                graph.dictionary = training_graph.dictionary.copy()
-                graph.nodeCount = training_graph.nodeCount
-            else:
-                graph.combine(training_graph, training_dict)
+            graph.combine(training_graph, training_dict)
 
         get_also_users = False
 
