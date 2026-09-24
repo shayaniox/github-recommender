@@ -13,6 +13,28 @@ from data_reader import DataReader
 
 
 class Metrics:
+    """Twelve metric families over one fold's recommendations.
+
+    Inputs, per test repository (continuing the six-repo toy fold):
+
+        Recommendations/acme___chatbot-server   ranked, '<topic>\t<score>' per line
+            #DEP#python 2.0   #DEP#api 2.0   #DEP#docker 2.0   #DEP#rest-api 2.0
+            #DEP#server 2.0   #DEP#async 1.2  #DEP#bot 1.166   #DEP#chat 1.166 ...
+
+        GroundTruth/acme___chatbot-server       unranked set, exact-string compared
+            #DEP#python  #DEP#api  #DEP#docker  #DEP#rest-api
+            #DEP#machine-learning  #DEP#chat  #DEP#bot  #DEP#fast
+
+    Outputs are cumulative curves swept over cut-offs 1..20, one file per metric:
+
+        rank   1..4  hit    5 miss (server)   6 miss (async)   7,8 hit (bot, chat)
+        P@10 = 6/10 = 0.60          R@10 = 6/8 = 0.75          SR@1 = 1 (rank 1 correct)
+
+    Comparison is by exact string INCLUDING the '#DEP#' prefix, which is why a seed written
+    as '#DEP# python' once made nDCG and EPC structurally zero.
+    """
+
+    # How many leading entries of a bayesian recommendation file are CNBN seeds.
     _NUM_OF_MNBN_TOPIC = 5
 
     def __init__(self, k: int, num_libs: int, src_dir: str, sub_folder: str, 
@@ -32,6 +54,16 @@ class Metrics:
         self.success_rate_dir_n = str(Path(self.src_dir) / sub_folder / "SuccesRateN")
         self.fs_dir = str(Path(self.src_dir) / sub_folder / "FScore")
         self.res_dir = str(Path(self.src_dir) / "Results")
+
+        # Only some of these were created at the point of use, so a fold that had never been
+        # run logged one "No such file or directory" per project and silently produced an
+        # EMPTY metric file: PRC_Round* came out 0 bytes because PrecisionRecall/ did not
+        # exist. The bayesian paths happened to mkdir theirs, which is why the hybrid numbers
+        # survived and the non-bayesian ones did not.
+        for directory in (self.pr_dir, self.pr_dir_b, self.success_rate_dir,
+                          self.success_rate_dir_b, self.success_rate_dir_n,
+                          self.fs_dir, self.res_dir):
+            Path(directory).mkdir(parents=True, exist_ok=True)
 
         self.reader = DataReader(self.src_dir)
         self.training_start_pos1 = tr_start_pos1
@@ -159,8 +191,11 @@ class Metrics:
             gt_file = str(Path(self.ground_truth) / filename)
             ground_truth_data = self.reader.read_ground_truth_file(gt_file)
 
-            training_dict_filename = str(Path(self.src_dir) / f"dicth_{filename}")
-            ground_truth_data = self.reader.get_libraries(training_dict_filename)
+            # NOTE: this used to re-read the ground truth via get_libraries(dicth_<repo>).
+            # In bayesian mode the GroundTruth file already holds exactly that set - the
+            # repo's full topic set (extract_EASE_dictionary writes every #DEP# topic) - and
+            # the two were verified identical for 644/644 projects, so removing the line has
+            # no numeric effect. There is no held-out topic split in bayesian mode.
 
             key_set = recommendation_data.keys()
             temp = set(ease_topics)
@@ -181,17 +216,37 @@ class Metrics:
                         writer.write(f"{content}\n")
                         i += 1
 
-                    count = 1
+                    # The recommendation file already begins with the same seeds that were
+                    # just scored at ranks 1..N_ease: the Topics Merger prepends them. Placing
+                    # entry k at rank k + N_ease therefore re-scored the seeds at ranks 6..10
+                    # and pushed the first genuinely new topic to rank 11, outside the reported
+                    # window - which is why every _b curve was flat from N=5 to N=10. A topic
+                    # already scored must not consume a second rank slot.
+                    rank = number_of_topics_from_ease
                     for key in key_set:
-                        temp.add(recommendation_data[key])
+                        topic = recommendation_data[key]
+                        if topic in temp:
+                            continue
+                        temp.add(topic)
+                        rank += 1
+
                         common = temp & set(ground_truth_data)
                         size = len(common)
-                        content = f"{key + number_of_topics_from_ease}\t{'1' if size else '0'}"
+                        content = f"{rank}\t{'1' if size else '0'}"
                         writer.write(f"{content}\n")
 
-                        count += 1
-                        if count > self.num_libs - number_of_topics_from_ease:
+                        if rank >= self.num_libs:
                             break
+
+                    # A recommendation list shorter than num_libs leaves the metric at its
+                    # final level for the remaining ranks. compute_average_success_rate_b
+                    # sums by LINE NUMBER and divides by the project count, so a short file
+                    # silently drags the average down; pad it out. This was invisible while
+                    # the duplicated seeds guaranteed every file 20 lines.
+                    final = '1' if (temp & set(ground_truth_data)) else '0'
+                    while rank < self.num_libs:
+                        rank += 1
+                        writer.write(f"{rank}\t{final}\n")
             except IOError as e:
                 self.logger.error(e)
 
@@ -285,8 +340,11 @@ class Metrics:
             gt_file = str(Path(self.ground_truth) / filename)
             ground_truth_data = self.reader.read_ground_truth_file(gt_file)
 
-            training_dict_filename = str(Path(self.src_dir) / f"dicth_{filename}")
-            ground_truth_data = self.reader.get_libraries(training_dict_filename)
+            # NOTE: this used to re-read the ground truth via get_libraries(dicth_<repo>).
+            # In bayesian mode the GroundTruth file already holds exactly that set - the
+            # repo's full topic set (extract_EASE_dictionary writes every #DEP# topic) - and
+            # the two were verified identical for 644/644 projects, so removing the line has
+            # no numeric effect. There is no held-out topic split in bayesian mode.
 
             total_of_relevant = len(ground_truth_data)
             ease_topics = self.reader.get_EASE_topic(testing_pro, number_of_topics_from_ease)
@@ -312,21 +370,40 @@ class Metrics:
                         writer.write(f"{content}\n")
                         i += 1
 
-                    count = 1
+                    # See success_rate_b: the recommendation file repeats the seeds that were
+                    # already scored at ranks 1..N_ease, so a duplicate must not consume a rank
+                    # slot. Scoring entry k at rank k + N_ease made precision@10 exactly
+                    # precision@5 / 2 by construction, for every configuration.
+                    rank = number_of_topics_from_ease
                     for key in key_set:
-                        temp.add(recommendation_file[key])
+                        topic = recommendation_file[key]
+                        if topic in temp:
+                            continue
+                        temp.add(topic)
+                        rank += 1
+
                         common = temp & set(ground_truth_data)
                         size = len(common)
 
-                        precision = size / (key + number_of_topics_from_ease) if key != 0 else 0
+                        precision = size / rank
                         recall = size / total_of_relevant if total_of_relevant != 0 else 0
 
-                        content = f"{key + number_of_topics_from_ease}\t{recall}\t{precision}"
+                        content = f"{rank}\t{recall}\t{precision}"
                         writer.write(f"{content}\n")
 
-                        count += 1
-                        if count > self.num_libs - number_of_topics_from_ease:
+                        if rank >= self.num_libs:
                             break
+
+                    # See success_rate_b: pad a short list to num_libs. The hit count stays
+                    # fixed, so recall holds flat while precision keeps falling as hits/rank -
+                    # the standard convention, which charges a system for returning fewer
+                    # than N items rather than rewarding it.
+                    size = len(temp & set(ground_truth_data))
+                    while rank < self.num_libs:
+                        rank += 1
+                        writer.write(f"{rank}\t"
+                                     f"{size / total_of_relevant if total_of_relevant else 0}\t"
+                                     f"{size / rank}\n")
             except IOError as e:
                 self.logger.error(e)
     def compute_average_precision_recall(self) -> None:
@@ -433,6 +510,10 @@ class Metrics:
             sr_file = str(Path(self.success_rate_dir_n) / filename)
 
             try:
+                # Carried forward by the fill loop below when a project's file is short; an
+                # empty file (a project with no recommendations at all) must contribute 0,
+                # not crash the whole evaluation on an unbound name.
+                success_rate = 0.0
                 with open(sr_file, 'r') as f:
                     id = 1
                     for line in f:
@@ -495,6 +576,10 @@ class Metrics:
             sr_file = str(Path(self.success_rate_dir_b) / filename)
 
             try:
+                # Carried forward by the fill loop below when a project's file is short; an
+                # empty file (a project with no recommendations at all) must contribute 0,
+                # not crash the whole evaluation on an unbound name.
+                success_rate = 0.0
                 with open(sr_file, 'r') as f:
                     id = 1
                     for line in f:
@@ -534,6 +619,10 @@ class Metrics:
             sr_file = str(Path(self.success_rate_dir) / filename)
 
             try:
+                # Carried forward by the fill loop below when a project's file is short; an
+                # empty file (a project with no recommendations at all) must contribute 0,
+                # not crash the whole evaluation on an unbound name.
+                success_rate = 0.0
                 with open(sr_file, 'r') as f:
                     id = 1
                     for line in f:
