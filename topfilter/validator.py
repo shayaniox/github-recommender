@@ -1,4 +1,5 @@
 import logging
+import math
 from pathlib import Path
 from typing import Dict, Set
 from data_reader import DataReader
@@ -32,7 +33,9 @@ class Validator:
         """
         Compute various evaluation metrics for the recommendation system.
         """
-        step = num_of_projects // 10
+        # ceil, matching runner.ten_fold_cross_validation: a floor here scores a different
+        # window than was recommended for whenever N is not a multiple of 10.
+        step = math.ceil(num_of_projects / 10)
         cut_off_value = self.num_of_libraries
         recall_rate = 0.0
         vals = {}
