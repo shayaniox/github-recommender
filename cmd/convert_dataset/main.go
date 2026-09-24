@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"flag"
@@ -11,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
 )
 
 // Repository struct for JSON decoding
@@ -25,9 +27,68 @@ type Repository struct {
 
 // Topic struct (linked to Repository)
 type Topic struct {
-	Name     string `json:"name"`
-	Stars    int    `json:"stars"`
-	RepoAddr string `json:"-"`
+	Name string `json:"name"`
+}
+
+var allowedTopics map[string]struct{}
+var csvPath = "all_topics.csv"
+
+func init() {
+	var err error
+	allowedTopics, err = loadAllowedTopics(csvPath)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+}
+
+func loadAllowedTopics(csvPath string) (map[string]struct{}, error) {
+	file, err := os.Open(csvPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open topics CSV: %w", err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(bufio.NewReader(file))
+	allowed := make(map[string]struct{})
+
+	// Read header
+	header, err := reader.Read()
+	if err != nil {
+		return nil, fmt.Errorf("failed to read CSV header: %w", err)
+	}
+	topicIdx := -1
+	for i, col := range header {
+		if strings.TrimSpace(col) == "topic" {
+			topicIdx = i
+			break
+		}
+	}
+	if topicIdx == -1 {
+		return nil, fmt.Errorf("no 'topic' column found in CSV")
+	}
+
+	// Read topics
+	for {
+		record, err := reader.Read()
+		if err != nil {
+			break // EOF is expected
+		}
+		topic := strings.TrimSpace(record[topicIdx])
+		if topic != "" {
+			allowed[topic] = struct{}{}
+		}
+	}
+	return allowed, nil
+}
+
+// Checks if any topic in repoTopics exists in allowedTopics
+func hasAllowedTopic(repoTopics []Topic, allowedTopics map[string]struct{}) bool {
+	for _, t := range repoTopics {
+		if _, ok := allowedTopics[t.Name]; ok {
+			return true
+		}
+	}
+	return false
 }
 
 func main() {
@@ -120,15 +181,17 @@ func processJSON(jsonFile string, outputFile string, batchSize int) error {
 			log.Fatal(err)
 		}
 
-		repoBatch = append(repoBatch, repo)
+		if hasAllowedTopic(repo.Topics, allowedTopics) && repo.Owner != "" && repo.Name != "" {
+			repoBatch = append(repoBatch, repo)
 
-		if len(repoBatch) >= batchSize {
-			if err := writeRepositoriesToCSV(csvWriter, repoBatch); err != nil {
-				return errors.Wrap(err, "error writing repositories to CSV")
+			if len(repoBatch) >= batchSize {
+				if err := writeRepositoriesToCSV(csvWriter, repoBatch); err != nil {
+					return errors.Wrap(err, "error writing repositories to CSV")
+				}
+				repoBatch = []Repository{} // Reset batch
+				csvWriter.Flush()          // Flush to file
+				// break
 			}
-			repoBatch = []Repository{} // Reset batch
-			csvWriter.Flush()          // Flush to file
-			break
 		}
 	}
 
