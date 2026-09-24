@@ -1,0 +1,19 @@
+{
+  "source": "dataset/pretty-dataset.json",
+  "source_bytes": 3969883029,
+  "source_mtime": 1741421982.7293983,
+  "rule": {
+    "exclude_forks": true,
+    "min_topics": 3,
+    "top_n_by_stars": 10000,
+    "tie_break": "nameWithOwner ascending"
+  },
+  "counts": {
+    "records": 3985968,
+    "forks_excluded": 0,
+    "fewer_than_3_topics": 2952444,
+    "eligible": 1033524,
+    "selected": 10000
+  },
+  "min_stars_selected": 3433
+}
