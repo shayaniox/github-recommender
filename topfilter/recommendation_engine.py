@@ -51,7 +51,10 @@ class RecommendationEngine:
         all_neighbour_libs[self.num_of_neighbours] = testing_libs
         libraries.update(testing_libs)
         
-        for lib in libraries:
+        # Sorted, not raw set order: set iteration order varies with PYTHONHASHSEED between
+        # processes, which reordered the user-item matrix columns and broke score ties
+        # differently on every run.
+        for lib in sorted(libraries):
             lib_set.append(lib)
         
         num_rows = self.num_of_neighbours + 1
