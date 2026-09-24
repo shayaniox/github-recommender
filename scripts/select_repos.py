@@ -12,13 +12,16 @@ would bias the corpus towards the knowledge graph whose effect is being measured
 
 Output, in the repositories_test.csv format the pipeline reads (repo,stars,forks,issues,topics...):
     <out>.csv            the selection
-    <out>.rule.json      the rule, the source file's size/mtime, and the counts
+    <out>.rule.json      the rule, the source file's size/mtime, the counts and the CSV's sha256
+
+The CSV is data and is not committed; the sha256 in the rule file identifies it.
 
 Usage: python scripts/select_repos.py [--n 10000] [--min-topics 3] [--out enrich/top10k]
 """
 
 import argparse
 import csv
+import hashlib
 import heapq
 import json
 import os
@@ -82,5 +85,6 @@ Path(f"{out}.rule.json").write_text(json.dumps({
                f"fewer_than_{a.min_topics}_topics": few_topics, "eligible": seen,
                "selected": len(rows)},
     "min_stars_selected": rows[-1][1] if rows else None,
+    "selection_sha256": hashlib.sha256(Path(f"{out}.csv").read_bytes()).hexdigest(),
 }, indent=2))
 print(f"{total} records, {seen} eligible, {len(rows)} selected -> {out}.csv")

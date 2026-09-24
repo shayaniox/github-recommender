@@ -15,5 +15,6 @@
     "eligible": 1033524,
     "selected": 10000
   },
-  "min_stars_selected": 3433
+  "min_stars_selected": 3433,
+  "selection_sha256": "d91e77eef4eed4b8ec9dfa5dc3fac7bf544e198d45d7a2a4338ae9acde0a4244"
 }

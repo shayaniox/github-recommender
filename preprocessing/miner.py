@@ -3,18 +3,21 @@ from github import Github, RateLimitExceededException, UnknownObjectException
 from ratelimit import limits, sleep_and_retry
 import pandas as pd
 from time import  sleep, time
-import shutil, os
+import shutil, os, sys
 from pathlib import Path
 from itertools import zip_longest
 
 
-TIME_INTERVAL = 3600
+TIME_INTERVAL = 360
 CALLS = 1000
 NL = "\n"
-GITHUB_KEY ="github_token"
-REPO_LIST_FILE = "repo_list.txt"
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from env_file import load_env  # noqa: E402
+load_env()
+GITHUB_KEY = os.environ.get("GITHUB_TOKEN", "")  # set in the git-ignored .env
+REPO_LIST_FILE = "repos_list_test.txt"
 README_FOLDER = "repo_readme"
-OUTPUT_CSV = "repositories.csv"
+OUTPUT_CSV = "repositories_test.csv"
 
 
 @sleep_and_retry
@@ -58,7 +61,7 @@ def main():
     g = Github(GITHUB_KEY, per_page=100)
     Path('./results').mkdir(parents=True, exist_ok=True)
     list_analyzed = os.listdir(README_FOLDER)
-    with open(REPO_LIST_FILE,"r", encoding='utf-8',errors='ignore') as reader:
+    with open(REPO_LIST_FILE, "r", encoding='utf-8', errors='ignore') as reader:
         for k, row1 in enumerate(reader):
             #owner, repo = row.replace("\n","").split("/")
             repo_name = row1.replace("\n", "")

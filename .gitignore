@@ -190,3 +190,20 @@ repos_list_test.txt
 !repos_list.txt
 !repos_list_test.txt
 !cnbn/lang_file.txt
+
+# Datasets are never committed; their sha256 is recorded in paper_artifacts/config.json
+# and enrich/*.rule.json instead.
+*.csv
+*.tsv
+*.xlsx
+*.json.gz
+custom_dataset/
+enrich/*
+!enrich/*.rule.json
+repo_readme*/
+repo_meta_only/
+outpath/
+# ...except the preprocessing rules, which are code, and the experiment's result tables.
+!preprocessing/rules/*.csv
+!paper_artifacts/*.csv
+!paper_artifacts/smoke/smoke_fold1.csv

@@ -11,7 +11,7 @@ Re-running skips every repository already in the manifest with status 'ok' or 'm
 primary rate limit (sleeps until X-RateLimit-Reset when X-RateLimit-Remaining hits 0) and
 secondary limits (Retry-After, or 60 s on a 403/429 without it).
 
-The token is read from GITHUB_TOKEN only; nothing is written anywhere except out_dir.
+The token is read from GITHUB_TOKEN (environment, or the git-ignored .env); nothing is written anywhere except out_dir.
 
 Usage: GITHUB_TOKEN=... python scripts/fetch_readmes.py enrich/top10k.csv enrich/readme_raw [--limit N]
 """
@@ -34,9 +34,12 @@ ap.add_argument("out_dir")
 ap.add_argument("--limit", type=int, default=None, help="fetch at most this many this session")
 a = ap.parse_args()
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from env_file import load_env  # noqa: E402
+load_env()
 token = os.environ.get("GITHUB_TOKEN")
 if not token:
-    sys.exit("GITHUB_TOKEN is not set")
+    sys.exit("GITHUB_TOKEN is not set (put it in .env)")
 
 out = Path(a.out_dir)
 out.mkdir(parents=True, exist_ok=True)
