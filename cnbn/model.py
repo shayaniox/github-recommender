@@ -17,6 +17,8 @@ class ModelConfig:
         model_type: str = 'CNB',
         num_topics: int = 20,
         results_path: Path = Path('results'),
+        # TopFilter's DataReader reads training_data.csv from its own source directory.
+        ease_output_path: Path = Path('outpath/TopFilter/training_data.csv'),
         timestamp_path: Path = Path('timestamp.csv'),
         lang_file: Path = Path('lang_file.txt'),
         topics_file: Path = Path('topics_134.txt')
@@ -24,6 +26,7 @@ class ModelConfig:
         self.model_type = model_type
         self.num_topics = num_topics
         self.results_path = results_path
+        self.ease_output_path = ease_output_path
         self.timestamp_path = timestamp_path
         self.lang_file = lang_file
         self.topics_file = topics_file
@@ -177,11 +180,15 @@ def predict_topics(
                     f.write(f"{recall(pred_list, act_topics)},")
                     f.write(f"{top_rank(pred_list, act_topics)}\n")
         
-        # Write training data to file
+        # Write training data to file. TopFilter's DataReader.load_EASE_output splits these
+        # lines on ';' and reads the file from its own source directory, so write ';'-separated
+        # lines to both the reporting copy and the TopFilter bridge.
         training_data_file = config.results_path / 'training_data.csv'
-        with training_data_file.open('w', encoding='utf-8') as f:
-            for repo, topics in predicted_topics.items():
-                f.write(f"{repo.replace(',', '/')},{','.join(topics)}\n")
+        for destination in (training_data_file, config.ease_output_path):
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            with destination.open('w', encoding='utf-8') as f:
+                for repo, topics in predicted_topics.items():
+                    f.write(f"{repo.replace(',', '/')};{';'.join(topics)}\n")
         
         # Write timestamps
         with config.timestamp_path.open('w', encoding='utf-8') as f:

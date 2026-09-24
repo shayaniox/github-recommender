@@ -124,7 +124,7 @@ class DataReader:
                     values = line.split(";")
                     repo_name = values[0].replace(".txt", "")
                     for z in values[1:]:
-                        self.eASEOutput[repo_name].append("#DEP# " + z.strip())
+                        self.eASEOutput[repo_name].append("#DEP#" + z.strip())
         except IOError as e:
             self.logger.error(f"Error loading EASE output {filename}: {e}")
 
