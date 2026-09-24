@@ -63,7 +63,8 @@ def predict_topics(
     labels: List[str],
     num_topics: int,
     list_test: Path,
-    model: str
+    model: str,
+    accumulate: bool = False
 ) -> Dict[str, List[str]]:
     """Predict topics for test repositories."""
     config = ModelConfig(model_type=model, num_topics=num_topics)
@@ -151,9 +152,11 @@ def predict_topics(
             config.results_path / 'results_9_topics.csv'
         ]
         
-        # Write headers if files don't exist
-        for res_file in results_files:
-            if not res_file.exists():
+        # Truncate and write the header on the first fold only; folds 2-10 append. These
+        # files were opened in append mode with the header written only when absent, so
+        # every run piled onto the previous one.
+        if not accumulate:
+            for res_file in results_files:
                 with res_file.open('w', encoding='utf-8') as f:
                     f.write("repo,success@1,success@2,success@3,success@4,success@5,"
                             "success@6,success@7,success@8,success@9,success@10,"
@@ -186,7 +189,7 @@ def predict_topics(
         training_data_file = config.results_path / 'training_data.csv'
         for destination in (training_data_file, config.ease_output_path):
             destination.parent.mkdir(parents=True, exist_ok=True)
-            with destination.open('w', encoding='utf-8') as f:
+            with destination.open('a' if accumulate else 'w', encoding='utf-8') as f:
                 for repo, topics in predicted_topics.items():
                     f.write(f"{repo.replace(',', '/')};{';'.join(topics)}\n")
         

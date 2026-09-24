@@ -79,7 +79,6 @@ class Runner:
             )
             engine.user_based_recommendation()
             self.logger.info(f"\tComputed recommendations fold {i}")
-            break
 
     @staticmethod
     def main():

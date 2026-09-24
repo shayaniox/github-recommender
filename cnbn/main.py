@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def run_experiment(round_num: int, model_type: str = 'CNB') -> None:
+def run_experiment(round_num: int, model_type: str = 'CNB', accumulate: bool = False) -> None:
     """Run a single experiment round."""
     try:
         # Configure paths using pathlib
@@ -48,7 +48,8 @@ def run_experiment(round_num: int, model_type: str = 'CNB') -> None:
             labels=train_labels,
             num_topics=20,
             list_test=Path(test_file),
-            model=model_type
+            model=model_type,
+            accumulate=accumulate
         )
 
         logger.info(f"Completed round {round_num} successfully")
@@ -66,7 +67,9 @@ def main() -> None:
             logger.info('*' * 40)
             logger.info(f'Starting round {i}')
             
-            run_experiment(round_num=i, model_type=model_type)
+            # Fold 1 truncates the shared output files; folds 2-10 append, so
+            # training_data.csv ends up covering every repository exactly once.
+            run_experiment(round_num=i, model_type=model_type, accumulate=(i > 1))
             
             logger.info(f'Completed round {i}')
             logger.info('*' * 40)

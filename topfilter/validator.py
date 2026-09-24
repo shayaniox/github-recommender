@@ -83,7 +83,6 @@ class Validator:
             vals.update(metrics.get_some_scores(cut_off_value, "EPC"))
             vals.update(metrics.get_some_scores(cut_off_value, "Entropy"))
             vals.update(metrics.get_some_scores(cut_off_value, "Entropy"))  # Duplicate in original?
-            break
 
         # Write results to file
         res_dir = Path(self.src_dir) / "Results"
