@@ -166,5 +166,27 @@ cython_debug/
 .qodo
 utils
 
-dataset/cnbn/
-dataset/topfilter/
+dataset/
+repo_readme/
+custom_dataset/CNBN/ten_folder_100/
+dataset_j/
+outpath/TopFilter
+
+
+# Large generated/source data (see .ignore and .claude/settings.json)
+results/*
+# ...but keep the small dated metric snapshots, which docs/METRICS.md cites as evidence.
+!results/run_*/
+!results/ablation/
+!results/ablation_unsynced/
+repositories.csv
+repositories_test.csv
+repositories_test1.csv
+repos_list.txt
+repos_list_test.txt
+*.zip
+*.rar
+*.txt
+!repos_list.txt
+!repos_list_test.txt
+!cnbn/lang_file.txt

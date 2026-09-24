@@ -24,6 +24,19 @@ def get_topics(
         
     Returns:
         Tuple of (actual_topics, top1_predicted, top7_predicted, top9_predicted)
+
+    Example:
+        dict_actual     {'freeCodeCamp/freeCodeCamp': ['learn-to-code', 'nodejs', 'react', ...]}
+        dict_predicted  {'freeCodeCamp,freeCodeCamp.txt': ['javascript', 'education', 'react',
+                                                           'nodejs', 'learn-to-code', ...]}
+        -> (['learn-to-code', 'nodejs', 'react', ...],       actual, all of them
+            ['javascript'],                                  top 1
+            ['javascript', 'education', ..., 'd3'],          top 7
+            ['javascript', 'education', ..., 'web'])         top 9
+
+    The two dicts are keyed differently - 'owner/name' vs 'owner,name.txt' - so the caller
+    passes both keys separately. These cut-offs are why the output files are named
+    results_{1,7,9}_topics.csv.
     """
     list_actual = dict_actual.get(key_actual, [])
     list_predicted = dict_predicted.get(key_predicted, [])
@@ -50,7 +63,14 @@ def success_rate(
     actual: List[str],
     n: int
 ) -> int:
-    """Calculate success rate for top-n predictions."""
+    """1 if at least `n` of the predicted topics are correct, else 0.
+
+        predicted ['javascript', 'education', 'react', 'nodejs', 'learn-to-code', 'programming', 'd3']
+        actual    ['learn-to-code', 'nonprofits', 'programming', 'nodejs', 'react', 'd3', ...]
+        match     ['education'? no] -> ['react', 'nodejs', 'learn-to-code', 'programming', 'd3']
+
+        n=1 -> 1      n=5 -> 1      n=6 -> 0
+    """
     if not actual:
         return 0
     match = [value for value in predicted if value in actual]

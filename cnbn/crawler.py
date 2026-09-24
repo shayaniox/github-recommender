@@ -20,7 +20,24 @@ class CrawlerConfig:
     required_columns: int = 4
 
 def map_repos2topics(repo_list: List[str], config: Optional[CrawlerConfig] = None) -> Dict[str, List[str]]:
-    """Maps repository identifiers to their corresponding topics from a CSV file."""
+    """Maps repository identifiers to their corresponding topics from a CSV file.
+
+    Ground truth for CNBN's own metrics, read from `repo_topics.csv` (repo,stars,forks,topics...):
+
+        row        ['freeCodeCamp/freeCodeCamp', '408888', '38677', 'learn-to-code',
+                    'nonprofits', 'programming', 'nodejs', ...]
+        repo_list  ['freeCodeCamp/freeCodeCamp', 'pytorch/pytorch', ...]   from test_<k>.txt
+
+        returns    {'freeCodeCamp/freeCodeCamp': ['learn-to-code', 'nonprofits', 'programming',
+                                                  'nodejs', 'react', 'd3', 'careers', ...]}
+
+    Topics start at index 3 here, NOT 4 as in `repositories_test.csv` - the two files have
+    different column counts. Getting that wrong shifts a star count into the topic list.
+
+    On any read failure every repo silently falls back to `default_topics`, the literal
+    ['topic1', 'topic2', 'topic3'], which scores 0 against everything rather than raising.
+    That is how a missing file once passed for a working run (section 4, item 3).
+    """
     config = config or CrawlerConfig()
     repo_to_topics: Dict[str, List[str]] = {}
     
