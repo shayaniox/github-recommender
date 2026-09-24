@@ -1,3 +1,18 @@
+"""Stage E driver: ten folds of CNBN, appending into one shared seed file.
+
+Per round, with `freeCodeCamp/freeCodeCamp` in fold 3:
+
+    train_dir  custom_dataset/CNBN/folds_sync/train3/   ~579 repos, ~5,800 README copies
+    test_dir   custom_dataset/CNBN/folds_sync/test3/    ~65 repos
+    dirs       ['learn-to-code', 'nodejs', 'react', ...]  test3's topic subdirectories
+    test_file  custom_dataset/CNBN/folds_sync/test_3.txt
+
+Fold 1 truncates `training_data.csv`, folds 2-10 append. Test sets are disjoint, so after
+round 10 the file holds every repository exactly once - which is what TopFilter needs, since
+it reads one seed file for all ten of its own folds.
+"""
+
+import os
 from pathlib import Path
 from typing import List
 from model import load_data, predict_topics
@@ -19,7 +34,8 @@ def run_experiment(round_num: int, model_type: str = 'CNB', accumulate: bool = F
     """Run a single experiment round."""
     try:
         # Configure paths using pathlib
-        base_dir = Path("./custom_dataset/CNBN/ten_folder_100")
+        base_dir = Path(os.environ.get("CNBN_FOLDS_DIR",
+                                       "./custom_dataset/CNBN/folds_sync"))
         train_dir = base_dir / f"train{round_num}"
         test_dir = base_dir / f"test{round_num}"
         
@@ -30,17 +46,22 @@ def run_experiment(round_num: int, model_type: str = 'CNB', accumulate: bool = F
         logger.info(f"Training directory: {train_dir}")
         logger.info(f"Testing directory: {test_dir}")
 
-        # Get test subdirectories (topics)
+        # Get test subdirectories (topics). These are the topic directories present in the
+        # TEST tree, i.e. the labels this fold's held-out repos carry - not the class space.
+        #   dirs  ['learn-to-code', 'nodejs', 'react', 'd3', 'careers', ...]
         dirs = [d.name for d in test_dir.iterdir() if d.is_dir()]
         if not dirs:
             logger.warning(f"No test directories found in {test_dir}")
             return
 
         # Load training data
+        #   train_data    ['# freeCodeCamp\n\nLearn to code...', ...]   ~5,800 README copies
+        #   train_labels  ['learn-to-code', 'nodejs', ...]                one label per copy
         train_data, train_labels = load_data(train_dir)
         
         test_file = base_dir / f"test_{round_num}.txt"
         # Run prediction
+        # num_topics=20 is what gets WRITTEN; TopFilter consumes only the first 5 of each row.
         predict_topics(
             dirs=dirs,
             test_dir=test_dir,
@@ -70,7 +91,7 @@ def main() -> None:
             # Fold 1 truncates the shared output files; folds 2-10 append, so
             # training_data.csv ends up covering every repository exactly once.
             run_experiment(round_num=i, model_type=model_type, accumulate=(i > 1))
-            
+
             logger.info(f'Completed round {i}')
             logger.info('*' * 40)
 
