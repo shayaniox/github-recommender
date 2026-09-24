@@ -7,17 +7,26 @@
 # of the dataset directory (TOPFILTER_SRC_DIR), so runs cannot overwrite each other.
 #
 # Usage: scripts/run_experiment.sh [OUT_DIR]      (default outpath/experiments)
-# Run from the repository root. Wall-clock seconds are written to OUT_DIR/timings.tsv.
+# Run from the repository root. Wall-clock seconds are written to OUT_DIR/timings.tsv and the
+# commit being run to OUT_DIR/git_sha.txt.
+#
+# Overridable for another corpus (defaults reproduce the 644-repository experiment):
+#   EXP_SRC       TopFilter dataset directory (dicth_/graph_/projects.txt)
+#   EXP_VARIANTS  space-separated name:cnbn_fold_tree pairs
 set -eu
 OUT="${1:-outpath/experiments}"
 PY=.venv/bin/python
-SRC=outpath/TopFilter
+SRC="${EXP_SRC:-outpath/TopFilter}"
 export PYTHONHASHSEED=0
 
-VARIANTS="readme_8k:custom_dataset/CNBN/folds_sync readme_8k_desc20:custom_dataset/CNBN/folds_desc20 meta_only:custom_dataset/CNBN/folds_meta"
+VARIANTS="${EXP_VARIANTS:-readme_8k_desc20:custom_dataset/CNBN/folds_desc20 readme_8k:custom_dataset/CNBN/folds_sync meta_only:custom_dataset/CNBN/folds_meta}"
 
 mkdir -p "$OUT"
 : > "$OUT/timings.tsv"
+git rev-parse HEAD > "$OUT/git_sha.txt"
+git status --porcelain --untracked-files=no > "$OUT/git_status.txt"
+printf '%s\n' $VARIANTS > "$OUT/variants.txt"
+printf '%s\n' "$SRC" > "$OUT/src.txt"
 
 timed() {  # timed <label> <logfile> <command...>
     label="$1"; log="$2"; shift 2

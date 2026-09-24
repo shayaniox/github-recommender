@@ -37,10 +37,27 @@ from scipy.stats import wilcoxon
 
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else "outpath/experiments")
 ART = Path(sys.argv[2] if len(sys.argv) > 2 else "paper_artifacts")
-DATASETS = {
-    "readme_8k": "custom_dataset/CNBN/folds_sync",
-    "readme_8k_desc20": "custom_dataset/CNBN/folds_desc20",
-    "meta_only": "custom_dataset/CNBN/folds_meta",
+# The variants, dataset directory and commit are read from what run_experiment.sh recorded in
+# OUT_DIR, so the collector always describes the run it is collecting.
+_variants = OUT / "variants.txt"
+DATASETS = (dict(line.split(":", 1) for line in _variants.read_text().split())
+            if _variants.exists() else {
+                "readme_8k_desc20": "custom_dataset/CNBN/folds_desc20",
+                "readme_8k": "custom_dataset/CNBN/folds_sync",
+                "meta_only": "custom_dataset/CNBN/folds_meta"})
+SRC = ((OUT / "src.txt").read_text().strip() if (OUT / "src.txt").exists()
+       else "outpath/TopFilter")
+FOLDS_JSON = Path(os.environ.get("EXP_FOLDS_JSON", "custom_dataset/folds.json"))
+PRIMARY = os.environ.get("EXP_PRIMARY", "readme_8k_desc20")
+# How each CNBN text corpus is built from the raw READMEs; each was verified byte-identical
+# (1000/1000 files) against the corpus on disk.
+_REBUILD = ".venv/bin/python scripts/rebuild_readme_corpus.py --src repo_readme --out {} "
+CORPUS_RECIPES = {
+    "readme_8k_desc20": _REBUILD.format("repo_readme_8k_desc20") + "--max-bytes 8192 "
+        "--descriptions repo_descriptions.csv --description-repeat 20 --with-languages",
+    "readme_8k": _REBUILD.format("repo_readme_8k") + "--max-bytes 8192",
+    "meta_only": _REBUILD.format("repo_meta_only") + "--no-readme --descriptions "
+        "repo_descriptions.csv --description-repeat 1 --with-languages --with-name",
 }
 RUNS = {
     "A": {"description": "baseline, KG disabled everywhere"},
@@ -80,7 +97,7 @@ def tree_digest(root):
     return h.hexdigest(), n
 
 
-folds = json.loads(Path("custom_dataset/folds.json").read_text())
+folds = json.loads(FOLDS_JSON.read_text())
 fold_sizes = [len(f) for f in folds["folds"]]
 
 raw, problems = [], []
@@ -186,14 +203,20 @@ if tfile.exists():
         label, secs, status = line.split("\t")
         timings[label] = {"wall_clock_seconds": float(secs), "exit_status": int(status)}
 
-sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"],
-                       capture_output=True, text=True).stdout.split("\n")
+if (OUT / "git_sha.txt").exists():
+    sha = (OUT / "git_sha.txt").read_text().strip()
+    dirty = (OUT / "git_status.txt").read_text().split("\n")
+else:  # runs made before run_experiment.sh recorded the commit
+    sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"],
+                           capture_output=True, text=True).stdout.split("\n")
 config = {
     "git_sha": sha,
+    "primary_dataset": PRIMARY,
+    "primary_dataset_note": "chosen by the project owner as the variant with the highest metrics",
     "git_modified_tracked_files": [l for l in dirty if l.strip()],
-    "command": "PYTHONHASHSEED=0 sh scripts/run_experiment.sh outpath/experiments && "
-               ".venv/bin/python scripts/collect_results.py outpath/experiments paper_artifacts",
+    "command": f"PYTHONHASHSEED=0 sh scripts/run_experiment.sh {OUT} && "
+               f".venv/bin/python scripts/collect_results.py {OUT} {ART}",
     "seeds": {"fold_assignment_seed (scripts/make_folds.py)": folds["seed"],
               "PYTHONHASHSEED": os.environ.get("PYTHONHASHSEED"),
               "other_randomness": "none: ComplementNB, TF-IDF and user-based CF are deterministic"},
@@ -215,8 +238,8 @@ config = {
     "cnbn_env": {"KG_ENABLED": "unset", "CNBN_DOUBLE_TFIDF": "unset (single TF-IDF)",
                  "model": "ComplementNB"},
     "inputs_sha256": {p: sha256(p) for p in (
-        "repositories_test.csv", "repo_topics.csv", "sedkgraph.csv",
-        "custom_dataset/folds.json", "outpath/TopFilter/projects.txt")},
+        os.environ.get("EXP_INPUT_CSV", "repositories_test.csv"), "repo_topics.csv", "sedkgraph.csv",
+        str(FOLDS_JSON), f"{SRC}/projects.txt")},
     "timings": timings,
     "problems": problems,
     "versions": {"python": platform.python_version(), "scikit-learn": sklearn.__version__,
@@ -228,6 +251,7 @@ for ds, tree in DATASETS.items():
     seeds = OUT / ds / "seeds.csv"
     config["datasets"][ds] = {
         "cnbn_fold_tree": tree, "fold_tree_sha256": digest, "fold_tree_files": nfiles,
+        "corpus_recipe": CORPUS_RECIPES.get(ds),
         "seed_file_sha256": sha256(seeds) if seeds.exists() else None,
         "seed_file_rows": sum(1 for _ in open(seeds)) if seeds.exists() else None,
         "topfilter_projects": folds["num_projects"],

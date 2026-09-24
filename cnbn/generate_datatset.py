@@ -143,11 +143,14 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", default="custom_dataset/CNBN/folds_sync")
     parser.add_argument("--csv", default="repositories_test.csv")
     parser.add_argument("--folds", type=int, nargs="*", default=None)
+    parser.add_argument("--folds-json", default="custom_dataset/folds.json",
+                        help="fold assignment written by scripts/make_folds.py")
     args = parser.parse_args()
 
     prepare_datasets(
         csv_path=Path(args.csv),
         readme_dir=Path(args.readme_dir),
         output_dir=Path(args.output_dir),
+        folds_path=Path(args.folds_json),
         folds=args.folds,
     )
