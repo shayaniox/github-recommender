@@ -23,7 +23,7 @@ is not costed here.
 | share of a full HybridRec run (CNBN + TopFilter, 644 repos) | ≈ 0.15% | ≈ 0.05% | §1 |
 | extra peak memory | +1.2 MB | +0.5 MB | §2 |
 | extra disk, recommendation files | ×4.0 (+4.7 MB per run) | none | §3 |
-| accuracy at N ≤ 10 | none: identical lists in the top 10 | **lower**: SR@10 −0.026, P@10 −0.014, R@10 −0.019 (p ≤ 0.012) | §4 |
+| accuracy at N ≤ 10 | none: identical lists in the top 10 | **lower** in all 5 fold splits: R@10 −0.016 ± 0.002, P@10 −0.011 ± 0.002, SR@10 −0.021 ± 0.008 | §4, §5 |
 
 In short, the KG is cheap to run. Its cost in this framework is in accuracy (rerank) or in having no
 effect at all (append), not in compute time.
@@ -115,23 +115,47 @@ graph neighbours. This is linear in the number of test repos, about 60 MB per ru
 
 ## 4. Accuracy
 
-From `paper_artifacts/significance.csv`: 644 repos, readme_8k_desc20, commit `c3eb693`, Wilcoxon
-signed-rank over the 10 folds. Δ = KG run − A.
+Mean ± standard deviation over the 10 folds of the main experiment (`paper_artifacts/results_raw.csv`,
+644 repos, readme_8k_desc20, commit `c3eb693`). p is a two-sided Wilcoxon signed-rank test over the
+10 folds (`paper_artifacts/significance.csv`).
 
-| N = 10 | B: append | C: rerank |
-|---|---|---|
-| success rate | 0 in all 10 folds | −0.0265 (p = 0.012) |
-| precision | 0 in all 10 folds | −0.0136 (p = 0.005) |
-| recall | 0 in all 10 folds | −0.0185 (p = 0.002) |
-| catalog coverage | 0 in all 10 folds | −0.0051 (p = 0.037) |
+| N = 10 | A: KG off | C: rerank | C − A, per fold | 95% CI of C − A | p |
+|---|---|---|---|---|---|
+| success rate | 0.7983 ± 0.0494 | 0.7718 ± 0.0596 | −0.0265 ± 0.0180 | [−0.0393, −0.0136] | 0.012 |
+| precision | 0.1820 ± 0.0160 | 0.1683 ± 0.0194 | −0.0136 ± 0.0062 | [−0.0180, −0.0092] | 0.005 |
+| recall | 0.2624 ± 0.0191 | 0.2439 ± 0.0235 | −0.0185 ± 0.0089 | [−0.0249, −0.0121] | 0.002 |
+| catalog coverage | 0.1734 ± 0.0142 | 0.1682 ± 0.0112 | −0.0051 ± 0.0057 | [−0.0092, −0.0010] | 0.037 |
 
-Append cannot change anything up to rank 20: the originals fill the window first (86 of them in
-the example above). Rerank changes the top 10 and makes it significantly worse. The full analysis
-is in `paper_artifacts/REPORT.md` §3.
+Append (B) is identical to A in every fold, so its Δ is exactly 0: the originals fill the window
+first (86 of them in the example above). Each method's own spread (±0.019 for A's recall) is about
+as large as rerank's effect, so those columns alone cannot rule out noise. The paired column can:
+A and C rise and fall together from fold to fold, and C is lower in all 10 folds.
+
+## 5. Is it noise? Five fold splits
+
+The pipeline is deterministic (identical metrics under another `PYTHONHASHSEED`), so the only random
+choice is which repositories share a fold. `scripts/repeated_cv.sh` re-ran the whole experiment
+(CNBN training sets, then A, B and C) on 5 fold splits, `make_folds.py --seed` 42, 1, 2, 3 and 4, at
+commit `adafc8d`. Split 42 is the main experiment's: its CNBN fold tree and all 1,200 fold values
+reproduced the published ones exactly. Generated report: `outpath/repeated_cv/REPEATED_CV.md`.
+
+| C − A at N = 10 | mean over the 5 splits ± std over splits | range of the split means | splits with p < 0.05 |
+|---|---|---|---|
+| recall | −0.0156 ± 0.0021 | −0.0185 to −0.0131 | 5 of 5 |
+| precision | −0.0111 ± 0.0019 | −0.0136 to −0.0086 | 5 of 5 |
+| success rate | −0.0210 ± 0.0084 | −0.0323 to −0.0108 | 3 of 5 |
+
+- Recall and precision drop in every split, and each split's 95% CI excludes zero.
+- Each method's mean barely moves between splits: A's recall@10 is 0.2622 ± 0.0028 across splits,
+  against ±0.0234 across folds.
+- Append is identical to A in all 50 folds. At N = 5 rerank is identical too: the 5 CNBN seeds are
+  pinned at score 2.0 and its bonus is at most 0.5, so it only reorders ranks 6 and below.
 
 ## Reproduce
 
 ```sh
 sh scripts/bench_kg.sh 5 outpath/bench_kg       # §1 and the peak RSS in §2, about 6 minutes
+sh scripts/repeated_cv.sh outpath/repeated_cv 42 1 2 3 4    # §5, about 35 minutes
+.venv/bin/python scripts/summarize_repeated_cv.py outpath/repeated_cv
 .venv/bin/python scripts/bench_kg_summary.py outpath/bench_kg
 ```
