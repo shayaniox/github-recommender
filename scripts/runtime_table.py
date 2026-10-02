@@ -49,6 +49,9 @@ print("| job | N repos | wall-clock | peak RSS | commit |")
 print("|---|---|---|---|---|")
 cf = []
 for w in a.cf:
+    if not (Path(w) / "timings.tsv").exists():
+        print(f"| CF-only `{w}` | not run | | | |")
+        continue
     t, n = timings(w), projects(w)
     for label, (sec, status, *rss) in t.items():
         if status != "0":
@@ -58,9 +61,15 @@ for w in a.cf:
         if label == "topfilter_half":
             cf.append((n, float(sec)))
 for e in a.hybrid:
+    if not (Path(e) / "timings.tsv").exists():
+        print(f"| hybrid `{e}` | not run | | | |")
+        continue
+    # Every TopFilter copy of a hybrid experiment holds the same projects.txt.
+    proj = next(Path(e).glob("*/A/projects.txt"))
+    n = sum(1 for x in proj.read_text().splitlines() if x.strip())
     for label, (sec, status, *_) in sorted(timings(e).items()):
         if status == "0":
-            print(f"| hybrid {label} | 644 | {float(sec):,.1f} s | | {sha(e)} |")
+            print(f"| hybrid {label} | {n:,} | {float(sec):,.1f} s | | {sha(e)} |")
 for m in a.manifest:
     stamps = []
     for line in Path(m).read_text().splitlines()[1:]:
