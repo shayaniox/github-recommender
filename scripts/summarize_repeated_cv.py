@@ -116,8 +116,13 @@ for kg in "BC":
                 d = diffs[s]
                 mu, sd = statistics.mean(d), statistics.stdev(d)
                 h = t.ppf(0.975, len(d) - 1) * sd / len(d) ** 0.5
-                p = (f"{wilcoxon(d, zero_method='wilcox').pvalue:.3g}" if any(d)
-                     else "undefined (all 0)")
+                # The same rule as collect_results.py, so seed 42 matches significance.csv:
+                # exact only with no zero and no tied |differences|, else normal approximation.
+                nz = [x for x in d if x != 0.0]
+                ties = len({round(abs(x), 12) for x in nz}) != len(nz)
+                method = "exact" if (len(nz) == len(d) and not ties) else "approx"
+                p = (f"{wilcoxon(d, zero_method='wilcox', method=method).pvalue:.3g}"
+                     f"{'' if method == 'exact' else ' (approx)'}" if nz else "undefined (all 0)")
                 below, equal = sum(x < 0 for x in d), sum(x == 0 for x in d)
                 lines.append(f"| {short}@{n} | {s} | {mu:+.4f} | {sd:.4f} | "
                              f"[{mu - h:+.4f}, {mu + h:+.4f}] | {p} | {below} / {equal} / {10 - below - equal} |")
