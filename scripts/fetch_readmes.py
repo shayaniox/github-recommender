@@ -20,6 +20,7 @@ import argparse
 import base64
 import csv
 import datetime
+import http.client
 import json
 import os
 import sys
@@ -77,7 +78,9 @@ with open(manifest, "a", encoding="utf-8") as log:
         while True:
             try:
                 code, headers, body = get(repo)
-            except (urllib.error.URLError, TimeoutError) as e:
+            # http.client.HTTPException covers RemoteDisconnected, which urllib does not wrap.
+            except (urllib.error.URLError, TimeoutError, ConnectionError,
+                    http.client.HTTPException) as e:
                 print(f"network error on {repo}: {e}; retrying in 30 s", flush=True)
                 time.sleep(30)
                 continue
