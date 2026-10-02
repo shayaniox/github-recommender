@@ -61,7 +61,7 @@ class Runner:
 
         # bayesian=True is the hybrid path: CNBN's top 5 stand in as each test repo's visible
         # profile. bayesian=False is "half mode": the first half of its real topics is shown
-        # instead. main() below hardcodes True, so half mode never runs by default.
+        # instead. main() below runs half mode only when TOPFILTER_HALF=1.
         self.ten_fold_cross_validation(bayesian, num_of_projects)
         self.logger.info(f"Current time: {int(time.time() * 1000)}")
 
@@ -115,7 +115,8 @@ class Runner:
     def main():
         runner = Runner()
         try:
-            runner.run(True)
+            # TOPFILTER_HALF=1 runs CF alone (half mode): no CNBN seeds, no training_data.csv.
+            runner.run(os.environ.get("TOPFILTER_HALF") != "1")
         except Exception as e:
             runner.logger.error(f"Error in main execution: {e}")
             import traceback
