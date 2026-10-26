@@ -1,0 +1,188 @@
+{
+  "git_sha": "c3eb693bcad2cf036bf4bd2a129ebe03d1a3fecd",
+  "primary_dataset": "readme_8k_desc20",
+  "primary_dataset_note": "chosen by the project owner as the variant with the highest metrics",
+  "git_modified_tracked_files": [],
+  "command": "PYTHONHASHSEED=0 sh scripts/run_experiment.sh outpath/experiments && .venv/bin/python scripts/collect_results.py outpath/experiments paper_artifacts",
+  "seeds": {
+    "fold_assignment_seed (scripts/make_folds.py)": 42,
+    "PYTHONHASHSEED": "0",
+    "other_randomness": "none: ComplementNB, TF-IDF and user-based CF are deterministic"
+  },
+  "tau_cnbn_seeds_per_test_repo": 5,
+  "real_topics_shown_per_test_repo": 0,
+  "k_cf_neighbours": 20,
+  "cnbn_topics_written_per_repo": 20,
+  "N_range_reported": [
+    1,
+    10
+  ],
+  "N_range_computed": [
+    1,
+    20
+  ],
+  "ground_truth": "each test repository's full normalised topic set (dicth_ file); no topic split",
+  "catalog_coverage_denominator": "distinct topics across the fold's training repositories",
+  "fold_mean": "unweighted mean of the 10 per-fold values; std = sample std (ddof=1)",
+  "folds": {
+    "n_splits": 10,
+    "step": 65,
+    "num_projects": 644,
+    "fold_sizes": [
+      65,
+      65,
+      65,
+      65,
+      65,
+      65,
+      65,
+      65,
+      65,
+      59
+    ]
+  },
+  "datasets": {
+    "readme_8k_desc20": {
+      "cnbn_fold_tree": "custom_dataset/CNBN/folds_desc20",
+      "fold_tree_sha256": "1fde590e358e0613c6d72d12f1402091366e66ea27c513e60a539e9e2c734f8a",
+      "fold_tree_files": 56290,
+      "corpus_recipe": ".venv/bin/python scripts/rebuild_readme_corpus.py --src repo_readme --out repo_readme_8k_desc20 --max-bytes 8192 --descriptions repo_descriptions.csv --description-repeat 20 --with-languages",
+      "seed_file_sha256": "4abf274f5f27cac7c5cb85621843c383b36b1e88728745ea15ad3b7f9e3bd30b",
+      "seed_file_rows": 644,
+      "topfilter_projects": 644
+    },
+    "readme_8k": {
+      "cnbn_fold_tree": "custom_dataset/CNBN/folds_sync",
+      "fold_tree_sha256": "8517c04d28f8f33be296277983231099cd598538763080e8f69ae6d59a59f8cb",
+      "fold_tree_files": 56290,
+      "corpus_recipe": ".venv/bin/python scripts/rebuild_readme_corpus.py --src repo_readme --out repo_readme_8k --max-bytes 8192",
+      "seed_file_sha256": "bc5083632ebc4469ffcaa5abd0eba0fb7604cc2c1bd38899043fad5dce7b54b5",
+      "seed_file_rows": 644,
+      "topfilter_projects": 644
+    },
+    "meta_only": {
+      "cnbn_fold_tree": "custom_dataset/CNBN/folds_meta",
+      "fold_tree_sha256": "0ca2d563281a8719d4e39395eb138b67a007d88d1f21e9bd51e956031f093582",
+      "fold_tree_files": 56290,
+      "corpus_recipe": ".venv/bin/python scripts/rebuild_readme_corpus.py --src repo_readme --out repo_meta_only --no-readme --descriptions repo_descriptions.csv --description-repeat 1 --with-languages --with-name",
+      "seed_file_sha256": "618611a011cdd27368f20e81e4f6c2ebf7ffd72c028291bf5e2adbe2ed8967cb",
+      "seed_file_rows": 644,
+      "topfilter_projects": 644
+    }
+  },
+  "runs": {
+    "A": {
+      "description": "baseline, KG disabled everywhere",
+      "cleared": [
+        "KG_ENABLED",
+        "KG_MODE",
+        "KG_ORIGINALS",
+        "KG_LAMBDA",
+        "KG_SOURCES",
+        "KG_NORMALISE",
+        "NO_SEED_PREPEND"
+      ]
+    },
+    "B": {
+      "description": "KG in Topics Merger, append",
+      "KG_ENABLED": "1",
+      "KG_MODE": "append",
+      "cleared": [
+        "KG_ENABLED",
+        "KG_MODE",
+        "KG_ORIGINALS",
+        "KG_LAMBDA",
+        "KG_SOURCES",
+        "KG_NORMALISE",
+        "NO_SEED_PREPEND"
+      ]
+    },
+    "C": {
+      "description": "KG in Topics Merger, rerank",
+      "KG_ENABLED": "1",
+      "KG_MODE": "rerank",
+      "KG_LAMBDA": "0.5",
+      "KG_SOURCES": "10",
+      "cleared": [
+        "KG_ENABLED",
+        "KG_MODE",
+        "KG_ORIGINALS",
+        "KG_LAMBDA",
+        "KG_SOURCES",
+        "KG_NORMALISE",
+        "NO_SEED_PREPEND"
+      ]
+    }
+  },
+  "cnbn_env": {
+    "KG_ENABLED": "unset",
+    "CNBN_DOUBLE_TFIDF": "unset (single TF-IDF)",
+    "model": "ComplementNB"
+  },
+  "inputs_sha256": {
+    "repositories_test.csv": "9e038a3a0c5b14977628d3e90667c5f8e6681a307483d3d76ea3f94a64b5755c",
+    "repo_topics.csv": "c8fc463ea0f559b764f328d559c4d2a867834672bd3ee44a50c9275cf9defdea",
+    "sedkgraph.csv": "9b7be6c0ddeb971f257b0f8c50d8d0e2c2ba184a29468018e453abd97abdcb53",
+    "custom_dataset/folds.json": "ccf3dfe4ac90445eb08a507c409914cd795dc4f08b9dfa19187f6bda2c3f6c0f",
+    "outpath/TopFilter/projects.txt": "dfebfc4e81068e7594999bfb051f31ccba63db0649c6ab4a96e6227b4059cd7b"
+  },
+  "timings": {
+    "cnbn/meta_only": {
+      "wall_clock_seconds": 35.2,
+      "exit_status": 0
+    },
+    "cnbn/readme_8k_desc20": {
+      "wall_clock_seconds": 333.7,
+      "exit_status": 0
+    },
+    "cnbn/readme_8k": {
+      "wall_clock_seconds": 367.9,
+      "exit_status": 0
+    },
+    "topfilter/readme_8k/A": {
+      "wall_clock_seconds": 20.3,
+      "exit_status": 0
+    },
+    "topfilter/readme_8k_desc20/A": {
+      "wall_clock_seconds": 20.6,
+      "exit_status": 0
+    },
+    "topfilter/meta_only/C": {
+      "wall_clock_seconds": 20.7,
+      "exit_status": 0
+    },
+    "topfilter/readme_8k_desc20/C": {
+      "wall_clock_seconds": 21.9,
+      "exit_status": 0
+    },
+    "topfilter/meta_only/A": {
+      "wall_clock_seconds": 21.8,
+      "exit_status": 0
+    },
+    "topfilter/readme_8k_desc20/B": {
+      "wall_clock_seconds": 23.4,
+      "exit_status": 0
+    },
+    "topfilter/readme_8k/B": {
+      "wall_clock_seconds": 23.4,
+      "exit_status": 0
+    },
+    "topfilter/readme_8k/C": {
+      "wall_clock_seconds": 23.7,
+      "exit_status": 0
+    },
+    "topfilter/meta_only/B": {
+      "wall_clock_seconds": 26.5,
+      "exit_status": 0
+    }
+  },
+  "problems": [],
+  "versions": {
+    "python": "3.8.10",
+    "scikit-learn": "1.3.2",
+    "nltk": "3.9.1",
+    "numpy": "1.24.4",
+    "pandas": "2.0.3",
+    "scipy": "1.10.1"
+  }
+}

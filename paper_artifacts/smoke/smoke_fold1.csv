@@ -1,0 +1,241 @@
+case,projects_scored,projects_with_5_seeds,metric,N,value
+current (all fixes),65,65,success_rate,1,0.4
+current (all fixes),65,65,success_rate,2,0.4923
+current (all fixes),65,65,success_rate,3,0.5846
+current (all fixes),65,65,success_rate,4,0.6615
+current (all fixes),65,65,success_rate,5,0.6923
+current (all fixes),65,65,success_rate,6,0.7231
+current (all fixes),65,65,success_rate,7,0.7385
+current (all fixes),65,65,success_rate,8,0.7385
+current (all fixes),65,65,success_rate,9,0.7538
+current (all fixes),65,65,success_rate,10,0.7538
+current (all fixes),65,65,precision,1,0.4
+current (all fixes),65,65,precision,2,0.2538
+current (all fixes),65,65,precision,3,0.2308
+current (all fixes),65,65,precision,4,0.2115
+current (all fixes),65,65,precision,5,0.1846
+current (all fixes),65,65,precision,6,0.1872
+current (all fixes),65,65,precision,7,0.1824
+current (all fixes),65,65,precision,8,0.1692
+current (all fixes),65,65,precision,9,0.1641
+current (all fixes),65,65,precision,10,0.1538
+current (all fixes),65,65,recall,1,0.0574
+current (all fixes),65,65,recall,2,0.0741
+current (all fixes),65,65,recall,3,0.101
+current (all fixes),65,65,recall,4,0.1251
+current (all fixes),65,65,recall,5,0.1374
+current (all fixes),65,65,recall,6,0.1683
+current (all fixes),65,65,recall,7,0.1914
+current (all fixes),65,65,recall,8,0.2028
+current (all fixes),65,65,recall,9,0.219
+current (all fixes),65,65,recall,10,0.2282
+current (all fixes),65,65,catalog_coverage,1,0.0239
+current (all fixes),65,65,catalog_coverage,2,0.0371
+current (all fixes),65,65,catalog_coverage,3,0.0553
+current (all fixes),65,65,catalog_coverage,4,0.0759
+current (all fixes),65,65,catalog_coverage,5,0.0949
+current (all fixes),65,65,catalog_coverage,6,0.1081
+current (all fixes),65,65,catalog_coverage,7,0.1213
+current (all fixes),65,65,catalog_coverage,8,0.1295
+current (all fixes),65,65,catalog_coverage,9,0.1361
+current (all fixes),65,65,catalog_coverage,10,0.1477
+revert fix 1a: comma-separated bridge,65,0,success_rate,1,0.0
+revert fix 1a: comma-separated bridge,65,0,success_rate,2,0.0154
+revert fix 1a: comma-separated bridge,65,0,success_rate,3,0.0615
+revert fix 1a: comma-separated bridge,65,0,success_rate,4,0.0615
+revert fix 1a: comma-separated bridge,65,0,success_rate,5,0.1538
+revert fix 1a: comma-separated bridge,65,0,success_rate,6,0.2154
+revert fix 1a: comma-separated bridge,65,0,success_rate,7,0.2154
+revert fix 1a: comma-separated bridge,65,0,success_rate,8,0.2308
+revert fix 1a: comma-separated bridge,65,0,success_rate,9,0.2462
+revert fix 1a: comma-separated bridge,65,0,success_rate,10,0.2462
+revert fix 1a: comma-separated bridge,65,0,precision,1,0.0
+revert fix 1a: comma-separated bridge,65,0,precision,2,0.0022
+revert fix 1a: comma-separated bridge,65,0,precision,3,0.0077
+revert fix 1a: comma-separated bridge,65,0,precision,4,0.0068
+revert fix 1a: comma-separated bridge,65,0,precision,5,0.0154
+revert fix 1a: comma-separated bridge,65,0,precision,6,0.0196
+revert fix 1a: comma-separated bridge,65,0,precision,7,0.0179
+revert fix 1a: comma-separated bridge,65,0,precision,8,0.0189
+revert fix 1a: comma-separated bridge,65,0,precision,9,0.0187
+revert fix 1a: comma-separated bridge,65,0,precision,10,0.0174
+revert fix 1a: comma-separated bridge,65,0,recall,1,0.0
+revert fix 1a: comma-separated bridge,65,0,recall,2,0.0014
+revert fix 1a: comma-separated bridge,65,0,recall,3,0.0087
+revert fix 1a: comma-separated bridge,65,0,recall,4,0.0087
+revert fix 1a: comma-separated bridge,65,0,recall,5,0.0234
+revert fix 1a: comma-separated bridge,65,0,recall,6,0.0325
+revert fix 1a: comma-separated bridge,65,0,recall,7,0.0325
+revert fix 1a: comma-separated bridge,65,0,recall,8,0.0372
+revert fix 1a: comma-separated bridge,65,0,recall,9,0.0398
+revert fix 1a: comma-separated bridge,65,0,recall,10,0.0398
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,1,0.0008
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,2,0.0017
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,3,0.0025
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,4,0.0033
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,5,0.0041
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,6,0.005
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,7,0.0058
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,8,0.0066
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,9,0.0074
+revert fix 1a: comma-separated bridge,65,0,catalog_coverage,10,0.0083
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,1,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,2,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,3,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,4,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,5,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,6,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,7,0.0154
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,8,0.0615
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,9,0.0615
+revert fix 1b: '#DEP# ' seed prefix,65,65,success_rate,10,0.1538
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,1,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,2,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,3,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,4,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,5,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,6,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,7,0.0022
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,8,0.0077
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,9,0.0068
+revert fix 1b: '#DEP# ' seed prefix,65,65,precision,10,0.0154
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,1,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,2,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,3,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,4,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,5,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,6,0.0
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,7,0.0014
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,8,0.0087
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,9,0.0087
+revert fix 1b: '#DEP# ' seed prefix,65,65,recall,10,0.0234
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,1,0.0239
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,2,0.0371
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,3,0.0553
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,4,0.0759
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,5,0.0949
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,6,0.0957
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,7,0.0965
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,8,0.0974
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,9,0.0982
+revert fix 1b: '#DEP# ' seed prefix,65,65,catalog_coverage,10,0.099
+revert fix 3: floor fold window in validator,64,65,success_rate,1,0.4062
+revert fix 3: floor fold window in validator,64,65,success_rate,2,0.4844
+revert fix 3: floor fold window in validator,64,65,success_rate,3,0.5781
+revert fix 3: floor fold window in validator,64,65,success_rate,4,0.6562
+revert fix 3: floor fold window in validator,64,65,success_rate,5,0.6875
+revert fix 3: floor fold window in validator,64,65,success_rate,6,0.7188
+revert fix 3: floor fold window in validator,64,65,success_rate,7,0.7344
+revert fix 3: floor fold window in validator,64,65,success_rate,8,0.7344
+revert fix 3: floor fold window in validator,64,65,success_rate,9,0.75
+revert fix 3: floor fold window in validator,64,65,success_rate,10,0.75
+revert fix 3: floor fold window in validator,64,65,precision,1,0.4062
+revert fix 3: floor fold window in validator,64,65,precision,2,0.25
+revert fix 3: floor fold window in validator,64,65,precision,3,0.2292
+revert fix 3: floor fold window in validator,64,65,precision,4,0.2109
+revert fix 3: floor fold window in validator,64,65,precision,5,0.1844
+revert fix 3: floor fold window in validator,64,65,precision,6,0.1875
+revert fix 3: floor fold window in validator,64,65,precision,7,0.183
+revert fix 3: floor fold window in validator,64,65,precision,8,0.1699
+revert fix 3: floor fold window in validator,64,65,precision,9,0.1649
+revert fix 3: floor fold window in validator,64,65,precision,10,0.1547
+revert fix 3: floor fold window in validator,64,65,recall,1,0.0583
+revert fix 3: floor fold window in validator,64,65,recall,2,0.073
+revert fix 3: floor fold window in validator,64,65,recall,3,0.1004
+revert fix 3: floor fold window in validator,64,65,recall,4,0.1248
+revert fix 3: floor fold window in validator,64,65,recall,5,0.1373
+revert fix 3: floor fold window in validator,64,65,recall,6,0.1687
+revert fix 3: floor fold window in validator,64,65,recall,7,0.1921
+revert fix 3: floor fold window in validator,64,65,recall,8,0.2037
+revert fix 3: floor fold window in validator,64,65,recall,9,0.2202
+revert fix 3: floor fold window in validator,64,65,recall,10,0.2296
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,1,0.0239
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,2,0.0371
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,3,0.0552
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,4,0.0758
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,5,0.0948
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,6,0.108
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,7,0.1212
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,8,0.1294
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,9,0.136
+revert fix 3: floor fold window in validator,64,65,catalog_coverage,10,0.1476
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,1,0.4
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,2,0.4923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,3,0.5846
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,4,0.6615
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,5,0.6923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,6,0.6923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,7,0.6923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,8,0.6923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,9,0.6923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,success_rate,10,0.6923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,1,0.4
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,2,0.2538
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,3,0.2308
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,4,0.2115
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,5,0.1846
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,6,0.1538
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,7,0.1319
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,8,0.1154
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,9,0.1026
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,precision,10,0.0923
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,1,0.0574
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,2,0.0741
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,3,0.101
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,4,0.1251
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,5,0.1374
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,6,0.1374
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,7,0.1374
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,8,0.1374
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,9,0.1374
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,recall,10,0.1374
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,1,0.0239
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,2,0.0371
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,3,0.0553
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,4,0.0759
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,5,0.0949
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,6,0.1081
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,7,0.1213
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,8,0.1295
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,9,0.1361
+revert rank-offset fix: metrics.py from d0f7f9c,65,65,catalog_coverage,10,0.1477
+"current, PYTHONHASHSEED=12345",65,65,success_rate,1,0.4
+"current, PYTHONHASHSEED=12345",65,65,success_rate,2,0.4923
+"current, PYTHONHASHSEED=12345",65,65,success_rate,3,0.5846
+"current, PYTHONHASHSEED=12345",65,65,success_rate,4,0.6615
+"current, PYTHONHASHSEED=12345",65,65,success_rate,5,0.6923
+"current, PYTHONHASHSEED=12345",65,65,success_rate,6,0.7231
+"current, PYTHONHASHSEED=12345",65,65,success_rate,7,0.7385
+"current, PYTHONHASHSEED=12345",65,65,success_rate,8,0.7385
+"current, PYTHONHASHSEED=12345",65,65,success_rate,9,0.7538
+"current, PYTHONHASHSEED=12345",65,65,success_rate,10,0.7538
+"current, PYTHONHASHSEED=12345",65,65,precision,1,0.4
+"current, PYTHONHASHSEED=12345",65,65,precision,2,0.2538
+"current, PYTHONHASHSEED=12345",65,65,precision,3,0.2308
+"current, PYTHONHASHSEED=12345",65,65,precision,4,0.2115
+"current, PYTHONHASHSEED=12345",65,65,precision,5,0.1846
+"current, PYTHONHASHSEED=12345",65,65,precision,6,0.1872
+"current, PYTHONHASHSEED=12345",65,65,precision,7,0.1824
+"current, PYTHONHASHSEED=12345",65,65,precision,8,0.1692
+"current, PYTHONHASHSEED=12345",65,65,precision,9,0.1641
+"current, PYTHONHASHSEED=12345",65,65,precision,10,0.1538
+"current, PYTHONHASHSEED=12345",65,65,recall,1,0.0574
+"current, PYTHONHASHSEED=12345",65,65,recall,2,0.0741
+"current, PYTHONHASHSEED=12345",65,65,recall,3,0.101
+"current, PYTHONHASHSEED=12345",65,65,recall,4,0.1251
+"current, PYTHONHASHSEED=12345",65,65,recall,5,0.1374
+"current, PYTHONHASHSEED=12345",65,65,recall,6,0.1683
+"current, PYTHONHASHSEED=12345",65,65,recall,7,0.1914
+"current, PYTHONHASHSEED=12345",65,65,recall,8,0.2028
+"current, PYTHONHASHSEED=12345",65,65,recall,9,0.219
+"current, PYTHONHASHSEED=12345",65,65,recall,10,0.2282
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,1,0.0239
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,2,0.0371
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,3,0.0553
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,4,0.0759
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,5,0.0949
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,6,0.1081
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,7,0.1213
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,8,0.1295
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,9,0.1361
+"current, PYTHONHASHSEED=12345",65,65,catalog_coverage,10,0.1477

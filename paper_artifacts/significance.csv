@@ -1,0 +1,241 @@
+comparison,dataset,N,metric,n_folds,n_nonzero_diff,mean_diff,statistic,p_value,method,note
+A_vs_B,readme_8k_desc20,1,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,1,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,1,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,1,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,2,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,2,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,2,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,2,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,3,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,3,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,3,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,3,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,4,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,4,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,4,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,4,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,5,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,5,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,5,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,5,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,6,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,6,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,6,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,6,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,7,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,7,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,7,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,7,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,8,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,8,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,8,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,8,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,9,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,9,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,9,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,9,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,10,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,10,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,10,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k_desc20,10,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,1,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,1,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,1,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,1,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,2,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,2,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,2,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,2,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,3,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,3,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,3,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,3,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,4,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,4,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,4,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,4,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,5,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,5,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,5,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,5,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,6,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,6,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,6,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,6,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,7,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,7,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,7,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,7,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,8,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,8,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,8,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,8,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,9,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,9,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,9,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,9,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,10,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,10,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,10,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,readme_8k,10,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,1,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,1,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,1,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,1,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,2,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,2,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,2,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,2,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,3,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,3,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,3,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,3,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,4,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,4,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,4,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,4,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,5,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,5,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,5,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,5,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,6,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,6,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,6,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,6,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,7,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,7,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,7,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,7,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,8,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,8,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,8,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,8,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,9,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,9,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,9,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,9,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,10,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,10,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,10,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_B,meta_only,10,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,1,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,1,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,1,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,1,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,2,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,2,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,2,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,2,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,3,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,3,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,3,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,3,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,4,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,4,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,4,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,4,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,5,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,5,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,5,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,5,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k_desc20,6,success_rate,10,5,-0.010769230769230776,0.0,0.039359508888249725,approx,only 5 non-zero differences; smallest attainable two-sided exact p is 0.0625
+A_vs_C,readme_8k_desc20,6,precision,10,10,-0.008948283355063025,3.0,0.012458141993823996,approx,
+A_vs_C,readme_8k_desc20,6,recall,10,10,-0.008345595227603048,2.0,0.005859375,exact,
+A_vs_C,readme_8k_desc20,6,catalog_coverage,10,9,0.002141232583628244,8.0,0.08583095844428565,approx,
+A_vs_C,readme_8k_desc20,7,success_rate,10,7,-0.020156453715775745,0.0,0.01734969380088989,approx,
+A_vs_C,readme_8k_desc20,7,precision,10,10,-0.014375116409014718,0.0,0.005062032126267864,approx,
+A_vs_C,readme_8k_desc20,7,recall,10,10,-0.014732125834472634,0.0,0.001953125,exact,
+A_vs_C,readme_8k_desc20,7,catalog_coverage,10,7,0.0023129716568719926,1.0,0.027991815485665747,approx,
+A_vs_C,readme_8k_desc20,8,success_rate,10,10,-0.02169491525423729,2.5,0.009823274507519249,approx,
+A_vs_C,readme_8k_desc20,8,precision,10,10,-0.013963494132985662,0.0,0.005005074402905223,approx,
+A_vs_C,readme_8k_desc20,8,recall,10,10,-0.015649171124399272,0.0,0.001953125,exact,
+A_vs_C,readme_8k_desc20,8,catalog_coverage,10,8,0.0005777270421498754,17.0,0.8886378608950078,approx,
+A_vs_C,readme_8k_desc20,9,success_rate,10,10,-0.029387222946544965,1.5,0.00756119983828346,approx,
+A_vs_C,readme_8k_desc20,9,precision,10,10,-0.014445893089960887,0.0,0.005033508200606249,approx,
+A_vs_C,readme_8k_desc20,9,recall,10,10,-0.018142055684428556,1.0,0.00390625,exact,
+A_vs_C,readme_8k_desc20,9,catalog_coverage,10,10,-0.002969850822936429,10.0,0.083984375,exact,
+A_vs_C,readme_8k_desc20,10,success_rate,10,10,-0.02646675358539765,3.0,0.011837195294774049,approx,
+A_vs_C,readme_8k_desc20,10,precision,10,10,-0.013619295958279012,0.0,0.005033508200606249,approx,
+A_vs_C,readme_8k_desc20,10,recall,10,10,-0.01850438920777903,0.0,0.001953125,exact,
+A_vs_C,readme_8k_desc20,10,catalog_coverage,10,10,-0.005124558705609264,7.0,0.037109375,exact,
+A_vs_C,readme_8k,1,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,1,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,1,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,1,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,2,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,2,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,2,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,2,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,3,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,3,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,3,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,3,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,4,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,4,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,4,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,4,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,5,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,5,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,5,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,5,catalog_coverage,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,readme_8k,6,success_rate,10,4,-0.007692307692307709,0.0,0.05878172135535886,approx,only 4 non-zero differences; smallest attainable two-sided exact p is 0.1250
+A_vs_C,readme_8k,6,precision,10,10,-0.007205562798783133,0.0,0.005033508200606249,approx,
+A_vs_C,readme_8k,6,recall,10,10,-0.006489187836645469,0.0,0.001953125,exact,
+A_vs_C,readme_8k,6,catalog_coverage,10,7,0.002144453533343059,0.0,0.01775592261403605,approx,
+A_vs_C,readme_8k,7,success_rate,10,8,-0.009074315514993492,10.0,0.25967825220979,approx,
+A_vs_C,readme_8k,7,precision,10,10,-0.011670702179176734,0.0,0.005005074402905223,approx,
+A_vs_C,readme_8k,7,recall,10,10,-0.01215904354952596,0.0,0.001953125,exact,
+A_vs_C,readme_8k,7,catalog_coverage,10,9,0.0032127463565069765,0.0,0.007685794055213263,approx,
+A_vs_C,readme_8k,8,success_rate,10,9,-0.02584093872229466,7.0,0.06157130861224875,approx,
+A_vs_C,readme_8k,8,precision,10,10,-0.012519556714471965,0.0,0.005033508200606249,approx,
+A_vs_C,readme_8k,8,recall,10,10,-0.014346689237171625,0.0,0.001953125,exact,
+A_vs_C,readme_8k,8,catalog_coverage,10,7,0.0014026285355601964,3.0,0.06297905121445523,approx,
+A_vs_C,readme_8k,9,success_rate,10,8,-0.022764015645371595,5.0,0.06802483707221696,approx,
+A_vs_C,readme_8k,9,precision,10,10,-0.010563523105895978,2.0,0.00929822320829811,approx,
+A_vs_C,readme_8k,9,recall,10,10,-0.013391171265356373,2.0,0.005859375,exact,
+A_vs_C,readme_8k,9,catalog_coverage,10,9,-0.0018982624178103466,8.0,0.08583095844428565,approx,
+A_vs_C,readme_8k,10,success_rate,10,9,-0.03045632333767928,6.0,0.04859508699288883,approx,
+A_vs_C,readme_8k,10,precision,10,10,-0.014354628422425044,0.0,0.005033508200606249,approx,
+A_vs_C,readme_8k,10,recall,10,10,-0.019220707077943055,0.0,0.001953125,exact,
+A_vs_C,readme_8k,10,catalog_coverage,10,10,-0.006436981295269512,0.0,0.001953125,exact,
+A_vs_C,meta_only,1,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,1,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,1,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,1,catalog_coverage,10,2,1.5027537963320515e-06,1.0,0.6547208460185769,approx,only 2 non-zero differences; smallest attainable two-sided exact p is 0.5000
+A_vs_C,meta_only,2,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,2,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,2,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,2,catalog_coverage,10,1,-8.190008190008118e-05,0.0,0.31731050786291415,approx,only 1 non-zero differences; smallest attainable two-sided exact p is 1.0000
+A_vs_C,meta_only,3,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,3,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,3,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,3,catalog_coverage,10,1,-8.190008190008118e-05,0.0,0.31731050786291415,approx,only 1 non-zero differences; smallest attainable two-sided exact p is 1.0000
+A_vs_C,meta_only,4,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,4,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,4,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,4,catalog_coverage,10,1,-8.19000819000798e-05,0.0,0.31731050786291415,approx,only 1 non-zero differences; smallest attainable two-sided exact p is 1.0000
+A_vs_C,meta_only,5,success_rate,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,5,precision,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,5,recall,10,0,0.0,,,,undefined: all paired differences are zero
+A_vs_C,meta_only,5,catalog_coverage,10,1,-8.190008190008258e-05,0.0,0.31731050786291415,approx,only 1 non-zero differences; smallest attainable two-sided exact p is 1.0000
+A_vs_C,meta_only,6,success_rate,10,7,-0.009230769230769242,2.0,0.039591763236690385,approx,
+A_vs_C,meta_only,6,precision,10,9,-0.005588874402433716,7.0,0.0663160312989308,approx,
+A_vs_C,meta_only,6,recall,10,10,-0.0056418054638393625,8.0,0.048828125,exact,
+A_vs_C,meta_only,6,catalog_coverage,10,8,0.0006656853259455059,13.0,0.4838398513935682,approx,
+A_vs_C,meta_only,7,success_rate,10,6,-0.017392438070404182,1.0,0.044009956390248774,approx,
+A_vs_C,meta_only,7,precision,10,10,-0.00969268020115478,1.0,0.006874035817356707,approx,
+A_vs_C,meta_only,7,recall,10,10,-0.010114070486951825,0.0,0.001953125,exact,
+A_vs_C,meta_only,7,catalog_coverage,10,8,-0.001394553255169534,10.0,0.2626182904425206,approx,
+A_vs_C,meta_only,8,success_rate,10,8,-0.014471968709256844,7.0,0.11840545365926593,approx,
+A_vs_C,meta_only,8,precision,10,10,-0.006404823989569755,2.5,0.010673370946293127,approx,
+A_vs_C,meta_only,8,recall,10,10,-0.007934928536623437,2.0,0.005859375,exact,
+A_vs_C,meta_only,8,catalog_coverage,10,9,-0.0015534605620386222,14.0,0.3139380937749148,approx,
+A_vs_C,meta_only,9,success_rate,10,5,-0.011551499348109517,3.5,0.2785170238295782,approx,only 5 non-zero differences; smallest attainable two-sided exact p is 0.0625
+A_vs_C,meta_only,9,precision,10,9,-0.005675793133420248,6.0,0.028314054945765665,approx,
+A_vs_C,meta_only,9,recall,10,10,-0.007875444705953175,7.0,0.037109375,exact,
+A_vs_C,meta_only,9,catalog_coverage,10,10,-0.0024642445968659833,16.0,0.275390625,exact,
+A_vs_C,meta_only,10,success_rate,10,7,-0.026779661016949174,0.0,0.01755232593841686,approx,
+A_vs_C,meta_only,10,precision,10,9,-0.007001303780964796,6.0,0.028314054945765665,approx,
+A_vs_C,meta_only,10,recall,10,10,-0.011969384664299912,5.0,0.01953125,exact,
+A_vs_C,meta_only,10,catalog_coverage,10,9,-0.005188139984554083,3.0,0.020879263166351643,approx,
