@@ -1,0 +1,20 @@
+{
+  "source": "dataset/pretty-dataset.json",
+  "source_bytes": 3969883029,
+  "source_mtime": 1741421982.7293983,
+  "rule": {
+    "exclude_forks": true,
+    "min_topics": 3,
+    "top_n_by_stars": 25000,
+    "tie_break": "nameWithOwner ascending"
+  },
+  "counts": {
+    "records": 3985968,
+    "forks_excluded": 0,
+    "fewer_than_3_topics": 2952444,
+    "eligible": 1033524,
+    "selected": 25000
+  },
+  "min_stars_selected": 1282,
+  "selection_sha256": "6618d6378368e1cfe3e70dc910cd4740993699d58547dc163d2dfd5b0f84ff64"
+}

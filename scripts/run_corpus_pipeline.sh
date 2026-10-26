@@ -8,6 +8,11 @@
 #   SELECTION_CSV     repositories_test.csv format (repo,stars,forks,issues,topics...)
 #   RAW_README_DIR    one '<owner>,<name>.txt' README per repository
 #   DESCRIPTIONS_CSV  repo,description,languages; extracted from the Kaggle dump when omitted
+#
+# Optional: ORIG_SRC=repo_readme ORIG_FOLDS=custom_dataset/folds.json keeps the originally mined
+# README text for the repositories listed in ORIG_FOLDS and takes every other README from
+# RAW_README_DIR, so a corpus-size comparison against that experiment is not confounded by
+# upstream README edits made since it was mined.
 set -eu
 SEL="$1"; RAW="$2"; WORK="$3"; DESC="${4:-}"
 PY=.venv/bin/python
@@ -19,9 +24,21 @@ if [ -z "$DESC" ]; then
     $PY scripts/extract_descriptions.py --only-mined --readme-dir "$RAW" --out "$DESC"
 fi
 
+CORPUS_SRC="--src $RAW"
+if [ -n "${ORIG_SRC:-}" ]; then
+    # rebuild_readme_corpus.py keeps the first copy of each file name, --src before --extra-src.
+    rm -rf "$WORK/readme_orig"
+    mkdir -p "$WORK/readme_orig"
+    $PY -c 'import json, shutil, sys
+for repo in json.load(open(sys.argv[1]))["order"]:
+    shutil.copy2(sys.argv[2] + "/" + repo.replace("___", ",", 1) + ".txt", sys.argv[3])' \
+        "$ORIG_FOLDS" "$ORIG_SRC" "$WORK/readme_orig"
+    CORPUS_SRC="--src $WORK/readme_orig --extra-src $RAW"
+fi
+
 # The primary dataset's recipe (verified byte-identical on the 1,000-repository corpus).
 rm -rf "$WORK/readme_8k_desc20"
-$PY scripts/rebuild_readme_corpus.py --src "$RAW" --out "$WORK/readme_8k_desc20" \
+$PY scripts/rebuild_readme_corpus.py $CORPUS_SRC --out "$WORK/readme_8k_desc20" \
     --max-bytes 8192 --descriptions "$DESC" --description-repeat 20 --with-languages
 
 rm -rf "$WORK/topfilter" "$WORK/cnbn_export"

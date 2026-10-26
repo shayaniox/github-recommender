@@ -1,0 +1,22 @@
+# Large data files — kept out of Claude Code / ripgrep search and file pickers.
+# Nothing here is moved; these paths stay where the pipeline code expects them.
+dataset/
+dataset_j/
+custom_dataset/
+outpath/
+repo_readme/
+results/
+preprocessing/rules/
+repositories.csv
+repositories_test.csv
+repositories_test1.csv
+repos_list.txt
+repos_list_test.txt
+all_topics.csv
+sedkgraph.csv
+sedkgraph.xlsx
+sample_sedkgraph.csv
+timestamp.csv
+cnbn/lang_file.txt
+*.zip
+*.rar
